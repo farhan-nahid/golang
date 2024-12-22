@@ -45,6 +45,3 @@ ehthumbs.db
 
 # env
 .env
-
-# Storage for sensitive data
-/storage
