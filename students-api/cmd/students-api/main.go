@@ -11,7 +11,7 @@ import (
 	"time"
 
 	"github.com/farhan-nahid/golang/students-api/internal/config"
-	"github.com/farhan-nahid/golang/students-api/internal/http/handlers"
+	student "github.com/farhan-nahid/golang/students-api/internal/http/handlers"
 	"github.com/farhan-nahid/golang/students-api/internal/storage/sqlite"
 )
 
@@ -40,6 +40,7 @@ func main(){
 
 
 	router.HandleFunc("POST /student", student.New(storage))
+	router.HandleFunc("GET /student/{studentID}", student.GetByID(storage))
 
 	// start server
 	server := http.Server {

@@ -8,6 +8,8 @@ import (
 	"log/slog"
 	"net/http"
 
+	"strconv"
+
 	"github.com/farhan-nahid/golang/students-api/internal/storage"
 	"github.com/farhan-nahid/golang/students-api/internal/types"
 	"github.com/farhan-nahid/golang/students-api/internal/utils/response"
@@ -46,9 +48,34 @@ func New (storage storage.Storage) http.HandlerFunc {
 			return
 		}
 
-
-
 		response.WriteJSON(w, http.StatusCreated, map[string]string{"message": "Student created successfully", "id": fmt.Sprintf("%d", lastId)})
 		
+	}
+}
+
+func GetByID (storage storage.Storage) http.HandlerFunc {
+	return func(w http.ResponseWriter, r *http.Request) {
+		
+		id := r.PathValue("studentID")
+		slog.Info("Get student by id", "id", id)
+
+		if id == "" {
+			response.WriteJSON(w, http.StatusBadRequest, response.WriteError(errors.New("id is required")))
+			return
+		}
+		studentID, err := strconv.ParseInt(id, 10, 64)
+		if err != nil {
+			response.WriteJSON(w, http.StatusBadRequest, response.WriteError(errors.New("invalid id format")))
+			return
+		}
+
+		student, err := storage.GetStudentByID(studentID)
+
+		if err != nil {
+			response.WriteJSON(w, http.StatusInternalServerError, response.WriteError(err))
+			return
+		}
+
+		response.WriteJSON(w, http.StatusOK, student)
 	}
 }
