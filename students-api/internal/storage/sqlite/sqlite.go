@@ -64,7 +64,6 @@ func (s *SQLite) CreateStudent(firstName string, lastName string, age int, email
 	return lastId, nil
 }
 
-
 func (s *SQLite) GetStudentByID(id int64) (types.Student, error) {
 	var student types.Student
 
@@ -87,4 +86,28 @@ func (s *SQLite) GetStudentByID(id int64) (types.Student, error) {
 	}
 
 	return student, nil
+}
+
+func (s *SQLite) GetStudents() ([]types.Student, error) {
+	var students []types.Student
+
+	rows, err := s.DB.Query(`SELECT id, firstName, lastName,  email, age, created_at FROM students`)
+
+	if err != nil {
+		return students, err
+	}
+
+	for rows.Next() {
+		var student types.Student
+
+		err = rows.Scan(&student.ID, &student.FirstName, &student.LastName, &student.Email, &student.Age, &student.CreatedAt)
+
+		if err != nil {
+			return students, err
+		}
+
+		students = append(students, student)
+	}
+
+	return students, nil
 }
