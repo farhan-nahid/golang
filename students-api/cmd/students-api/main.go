@@ -11,12 +11,24 @@ import (
 	"time"
 
 	"github.com/farhan-nahid/golang/students-api/internal/config"
-	student "github.com/farhan-nahid/golang/students-api/internal/http/handlers"
+	"github.com/farhan-nahid/golang/students-api/internal/http/handlers"
+	"github.com/farhan-nahid/golang/students-api/internal/storage/sqlite"
 )
 
 func main(){
 	// load config 
 	cfg := config.MustLoadConfig()
+
+	// database connection
+	 storage, err := sqlite.New(*cfg)
+
+	 if err != nil {
+		 slog.Error("Failed to connect to database", slog.String("error", err.Error()))
+		 os.Exit(1)
+	 }
+
+	 slog.Info("Storage Initialize", slog.String("Env", cfg.Env))
+
 
 	// set router
 	router := http.NewServeMux()
@@ -27,7 +39,7 @@ func main(){
 	})
 
 
-	router.HandleFunc("POST /student", student.New())
+	router.HandleFunc("POST /student", student.New(storage))
 
 	// start server
 	server := http.Server {
