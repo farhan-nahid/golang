@@ -111,3 +111,21 @@ func (s *SQLite) GetStudents() ([]types.Student, error) {
 
 	return students, nil
 }
+
+func (s *SQLite) UpdateStudentByID(id int64, student types.Student) (types.Student, error) {
+	stmt, err := s.DB.Prepare(`UPDATE students SET firstName = ?, lastName = ?, email = ?, age = ? WHERE id = ?`)
+
+	if err != nil {
+		return student, err
+	}
+
+	defer stmt.Close()
+
+	_, err = stmt.Exec(student.FirstName, student.LastName, student.Email, student.Age, id)
+
+	if err != nil {
+		return student, err
+	}
+
+	return student, nil
+}
