@@ -1,4 +1,4 @@
-module github.com/farhan-nahid/golang/students-api
+module github.com/farhan-nahid/golang/1_practice/students-api
 
 go 1.23.4
 

@@ -10,9 +10,9 @@ import (
 	"syscall"
 	"time"
 
-	"github.com/farhan-nahid/golang/students-api/internal/config"
-	student "github.com/farhan-nahid/golang/students-api/internal/http/handlers"
-	"github.com/farhan-nahid/golang/students-api/internal/storage/sqlite"
+	"github.com/farhan-nahid/golang/1_practice/students-api/internal/config"
+	student "github.com/farhan-nahid/golang/1_practice/students-api/internal/http/handlers"
+	"github.com/farhan-nahid/golang/1_practice/students-api/internal/storage/sqlite"
 )
 
 func main(){

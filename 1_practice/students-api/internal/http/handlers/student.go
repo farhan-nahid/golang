@@ -10,9 +10,9 @@ import (
 
 	"strconv"
 
-	"github.com/farhan-nahid/golang/students-api/internal/storage"
-	"github.com/farhan-nahid/golang/students-api/internal/types"
-	"github.com/farhan-nahid/golang/students-api/internal/utils/response"
+	"github.com/farhan-nahid/golang/1_practice/students-api/internal/storage"
+	"github.com/farhan-nahid/golang/1_practice/students-api/internal/types"
+	"github.com/farhan-nahid/golang/1_practice/students-api/internal/utils/response"
 	"github.com/go-playground/validator/v10"
 )
 
